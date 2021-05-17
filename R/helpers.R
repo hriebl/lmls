@@ -42,7 +42,7 @@ set_coef_funs <- list(
   scale = set_gamma
 )
 
-set_coef <- function(m, coef, predictor) {
+set_coef <- function(m, predictor, coef) {
   set_coef_funs[[predictor]](m, coef)
 }
 
@@ -107,7 +107,7 @@ coefmat <- function(m, predictor) {
 
 #' @importFrom stats quantile
 
-coefmat_samples <- function(m, type, predictor) {
+coefmat_samples <- function(m, predictor, type) {
   samples <- m[[type]][[predictor]]
 
   coefmat <- apply(samples, 2, function(x) {

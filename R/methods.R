@@ -220,7 +220,7 @@ summary.lslm <- function(object,
 
   if (type != "ml") {
     coefmat <- function(m, predictor) {
-      coefmat_samples(m, type, predictor)
+      coefmat_samples(m, predictor, type)
     }
 
     if (is.null(object[[type]]$location) || is.null(object[[type]]$scale)) {

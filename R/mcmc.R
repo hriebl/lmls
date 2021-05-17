@@ -52,7 +52,7 @@ mcmc_update <- function(curr_m, predictor, stepsize) {
   prop_coef <- proposal$prop_coef
   forward <- proposal$forward
 
-  prop_m <- set_coef(curr_m, prop_coef, predictor)
+  prop_m <- set_coef(curr_m, predictor, prop_coef)
   backward <- backward(curr_m, prop_m, predictor, stepsize)
 
   alpha <- logLik(prop_m) - logLik(curr_m) + backward - forward
