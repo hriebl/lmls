@@ -4,17 +4,25 @@
 \alias{mcmc}
 \title{MCMC inference for location-scale regression}
 \usage{
-mcmc(m, nsim = 1000)
+mcmc(m, nsim = 1000, stepsize = sqrt(3) * (m$df)^(-1/6))
 }
 \arguments{
 \item{m}{A location-scale regression model from the \code{\link[=lslm]{lslm()}} function.}
 
 \item{nsim}{The number of MCMC samples to draw.}
+
+\item{stepsize}{The step size of the MCMC update.}
 }
 \description{
 A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
-models from the \code{\link[=lslm]{lslm()}} function. The sampler uses a Metropolis-Hastings
-algorithm with Gaussian proposals that approximate the curvature of the
-posterior with the Fisher information. All priors in the model are assumed
-to be flat.
+models from the \code{\link[=lslm]{lslm()}} function. The sampler uses the Riemann manifold
+Metropolis-adjusted Langevin algorithm (MMALA) from Girolami and Calderhead
+(2011) with the Fisher-Rao metric tensor. All priors in the model are
+assumed to be flat.
+}
+\references{
+Girolami, M. and Calderhead, B. (2011), Riemann manifold Langevin and
+Hamiltonian Monte Carlo methods. Journal of the Royal Statistical Society:
+Series B (Statistical Methodology), 73: 123-214.
+\url{https://doi.org/10.1111/j.1467-9868.2010.00765.x}
 }
