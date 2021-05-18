@@ -20,18 +20,18 @@ test_that("sampling from multivariate normal works", {
 
 test_that("multivariate normal density works", {
   expect_equal(
-    dmvnorm(x[,1], mu, chol_sig_inv, log = TRUE),
-    mvtnorm::dmvnorm(x[,1], mu, sig, log = TRUE)
+    dmvnorm(x[, 1], mu, chol_sig_inv, log = TRUE),
+    mvtnorm::dmvnorm(x[, 1], mu, sig, log = TRUE)
   )
 
   expect_equal(
-    dmvnorm(x[,2], mu, chol_sig_inv, log = FALSE),
-    mvtnorm::dmvnorm(x[,2], mu, sig, log = FALSE)
+    dmvnorm(x[, 2], mu, chol_sig_inv, log = FALSE),
+    mvtnorm::dmvnorm(x[, 2], mu, sig, log = FALSE)
   )
 
   expect_equal(
-    dmvnorm(x[,3], mu, chol_sig_inv),
-    mvtnorm::dmvnorm(x[,3], mu, sig)
+    dmvnorm(x[, 3], mu, chol_sig_inv),
+    mvtnorm::dmvnorm(x[, 3], mu, sig)
   )
 
   expect_equal(
