@@ -25,14 +25,14 @@ info_gamma <- function(m) {
 # mcmc helpers ----------------------------------------------------------------
 
 set_beta <- function(m, beta) {
-  m$coefficients$location <- beta
+  m$coefficients$location[] <- beta
   m$fitted.values$location <- drop(m$x %*% beta)
-  m$residuals <- m$y - m$fitted.values$location
+  m$residuals <- m$y - fitted(m, "location")
   m
 }
 
 set_gamma <- function(m, gamma) {
-  m$coefficients$scale <- gamma
+  m$coefficients$scale[] <- gamma
   m$fitted.values$scale <- exp(drop(m$z %*% gamma))
   m
 }
