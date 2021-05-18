@@ -84,7 +84,13 @@ dmvnorm <- function(x, mu = 0, chol_sig_inv, log = FALSE) {
   std_norm <- drop(chol_sig_inv %*% (x - mu))
   correction <- sum(log(diag(chol_sig_inv)))
 
-  log_prob <- sum(dnorm(std_norm, log = TRUE)) + correction
+  log_prob <- dnorm(std_norm, log = TRUE)
+
+  if (is.matrix(log_prob)) {
+    log_prob <- colSums(log_prob) + correction
+  } else {
+    log_prob <- sum(log_prob) + correction
+  }
 
   if (log) {
     log_prob
