@@ -11,6 +11,8 @@ beta <- gamma <- c(0, 0, 0)
 m <- set_coef(m, "location", beta)
 m <- set_coef(m, "scale", gamma)
 
+# setting coefficients --------------------------------------------------------
+
 test_that("setting coefficients works", {
   names(beta) <- c("(Intercept)", "x1", "x3")
   names(gamma) <- c("(Intercept)", "x2", "x3")
@@ -20,13 +22,15 @@ test_that("setting coefficients works", {
 })
 
 test_that("fitted values are updated", {
-  expect_equal(unname(fitted(m, "location")), rep(0, n))
-  expect_equal(unname(fitted(m, "scale")), rep(1, n))
+  expect_equal(fitted(m, "location"), rep(0, n), ignore_attr = "names")
+  expect_equal(fitted(m, "scale"), rep(1, n), ignore_attr = "names")
 })
 
 test_that("residuals are updated", {
-  expect_equal(unname(residuals(m)), y)
+  expect_equal(residuals(m), y, ignore_attr = "names")
 })
+
+# coefficient matrices --------------------------------------------------------
 
 test_that("coefficient matrix works", {
   cm <- coefmat(m, "location")

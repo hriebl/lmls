@@ -9,6 +9,8 @@ x3 <- runif(n)
 y <- rnorm(n, 0 + 1 * x1 + 1 * x3, exp(-3 + 1 * x2 + 1 * x3))
 m <- lslm(y ~ x1 + x3, ~ x2 + x3, light = FALSE)
 
+# score -----------------------------------------------------------------------
+
 beta <- gamma <- c(0, 0, 0)
 m <- set_coef(m, "location", beta)
 m <- set_coef(m, "scale", gamma)
@@ -19,13 +21,15 @@ f <- function(x, predictor) {
 
 test_that("score of beta is correct", {
   num_score <- grad(f, beta, predictor = "location")
-  expect_equal(unname(score(m, "location")), num_score)
+  expect_equal(score(m, "location"), num_score, ignore_attr = "names")
 })
 
 test_that("score of gamma is correct", {
   num_score <- grad(f, gamma, predictor = "scale")
-  expect_equal(unname(score(m, "scale")), num_score)
+  expect_equal(score(m, "scale"), num_score, ignore_attr = "names")
 })
+
+# fisher info -----------------------------------------------------------------
 
 beta <- c(0, 1, 1)
 gamma <- c(-3, 1, 1)
