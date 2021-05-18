@@ -33,8 +33,16 @@ test_that("coefficient matrix works", {
 
   expect_true(is.matrix(cm))
   expect_equal(dim(cm), c(3, 4))
-  expect_equal(rownames(cm), c("(Intercept)", "x1", "x3"))
-  expect_equal(colnames(cm), c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+
+  expect_equal(
+    rownames(cm),
+    c("(Intercept)", "x1", "x3")
+  )
+
+  expect_equal(
+    colnames(cm),
+    c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
+  )
 })
 
 test_that("coefficient matrix from samples works", {
@@ -42,6 +50,14 @@ test_that("coefficient matrix from samples works", {
 
   expect_true(is.matrix(cm))
   expect_equal(dim(cm), c(3, 4))
-  expect_equal(rownames(cm), c("(Intercept)", "x1", "x3"))
-  expect_equal(colnames(cm), c("Mean", "2.5%", "50%", "97.5%"))
+
+  expect_equal(
+    rownames(cm),
+    c("(Intercept)", "x1", "x3")
+  )
+
+  expect_equal(
+    colnames(cm),
+    c("Mean", "2.5%", "50%", "97.5%")
+  )
 })
