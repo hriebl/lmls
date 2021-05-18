@@ -19,12 +19,12 @@ f <- function(x, predictor) {
 
 test_that("score of beta is correct", {
   num_score <- grad(f, beta, predictor = "location")
-  expect_equal(unname(score_beta(m)), num_score)
+  expect_equal(unname(score(m, "location")), num_score)
 })
 
 test_that("score of gamma is correct", {
   num_score <- grad(f, gamma, predictor = "scale")
-  expect_equal(unname(score_gamma(m)), num_score)
+  expect_equal(unname(score(m, "scale")), num_score)
 })
 
 beta <- c(0, 1, 1)
@@ -50,4 +50,9 @@ test_that("fisher info of beta is correct", {
 
 test_that("fisher info of gamma is correct", {
   expect_equal(info_gamma(m), num_info[4:6, 4:6], tolerance = 0.05)
+})
+
+test_that("cholesky decomposition of fisher info works", {
+  expect_equal(chol_info(m, "location"), chol(info_beta(m)))
+  expect_equal(chol_info(m, "scale"), chol(info_gamma(m)))
 })
