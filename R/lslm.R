@@ -130,7 +130,7 @@ finish <- function(m) {
   m$vcov$scale <- chol2inv(m$chol_info_gamma)
 
   if (m$light) {
-    m$x <- m$z <- NULL
+    m$x <- m$z <- m$chol_info_gamma <- NULL
   }
 
   m
