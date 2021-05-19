@@ -1,5 +1,3 @@
-library(numDeriv)
-
 set.seed(1337)
 
 n <- 100
@@ -16,17 +14,17 @@ m <- set_coef(m, "location", beta)
 m <- set_coef(m, "scale", gamma)
 
 f <- function(x, predictor) {
-   logLik(set_coef(m, predictor, x))
+  logLik(set_coef(m, predictor, x))
 }
 
 test_that("score of beta is correct", {
-  num_score <- grad(f, beta, predictor = "location")
-  expect_equal(score(m, "location"), num_score, ignore_attr = "names")
+  num_score <- numDeriv::grad(f, beta, predictor = "location")
+  expect_exactly(score(m, "location"), num_score)
 })
 
 test_that("score of gamma is correct", {
-  num_score <- grad(f, gamma, predictor = "scale")
-  expect_equal(score(m, "scale"), num_score, ignore_attr = "names")
+  num_score <- numDeriv::grad(f, gamma, predictor = "scale")
+  expect_exactly(score(m, "scale"), num_score)
 })
 
 # fisher info -----------------------------------------------------------------
@@ -49,14 +47,14 @@ reps <- replicate(nsim, {
 num_info <- cov(t(reps))
 
 test_that("fisher info of beta is correct", {
-  expect_equal(info_beta(m), num_info[1:3, 1:3], tolerance = 0.05)
+  expect_roughly(info_beta(m), num_info[1:3, 1:3])
 })
 
 test_that("fisher info of gamma is correct", {
-  expect_equal(info_gamma(m), num_info[4:6, 4:6], tolerance = 0.05)
+  expect_roughly(info_gamma(m), num_info[4:6, 4:6])
 })
 
-test_that("cholesky decomposition of fisher info works", {
+test_that("chol_info() works", {
   expect_equal(chol_info(m, "location"), chol(info_beta(m)))
   expect_equal(chol_info(m, "scale"), chol(info_gamma(m)))
 })

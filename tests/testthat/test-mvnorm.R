@@ -9,13 +9,13 @@ sig <- crossprod(sig)
 sig_inv <- chol2inv(chol(sig))
 chol_sig_inv <- chol(sig_inv)
 
-n <- 5000
+n <- 10000
 
 x <- rmvnorm(n, mu, chol_sig_inv)
 
 test_that("sampling from multivariate normal works", {
-  expect_equal(rowMeans(x), mu, tolerance = 0.05)
-  expect_equal(cov(t(x)), sig, tolerance = 0.05)
+  expect_roughly(rowMeans(x), mu)
+  expect_roughly(cov(t(x)), sig)
 })
 
 test_that("multivariate normal density works", {
