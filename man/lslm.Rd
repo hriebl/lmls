@@ -4,7 +4,14 @@
 \alias{lslm}
 \title{Location-scale regression}
 \usage{
-lslm(location, scale = ~1, data = environment(location), light = TRUE)
+lslm(
+  location,
+  scale = ~1,
+  data = environment(location),
+  light = TRUE,
+  maxit = 100,
+  reltol = sqrt(.Machine$double.eps)
+)
 }
 \arguments{
 \item{location}{A two-sided formula with the response variable on the LHS
@@ -18,6 +25,12 @@ the \code{location} and \code{scale} formulas.}
 
 \item{light}{If \code{TRUE}, the design matrices are removed from the estimated
 model to save some memory.}
+
+\item{maxit}{The maximum number of iterations of the Fisher scoring
+algorithm.}
+
+\item{reltol}{The relative convergence tolerance of the Fisher scoring
+algorithm.}
 }
 \description{
 The location-scale regression model assumes a normally distributed response

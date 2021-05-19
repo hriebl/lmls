@@ -57,7 +57,11 @@ update_gamma <- function(m) {
 
 #' @importFrom stats model.matrix update
 
-setup <- function(location, scale, data, light, call) {
+setup <- function(location,
+                  scale = ~1,
+                  data = environment(location),
+                  light = TRUE,
+                  call = NULL) {
   scale <- update(scale, paste(location[[2]], "~."))
   y <- eval(location[[2]], data, environment(location))
   x <- model.matrix(location, data)
@@ -152,15 +156,21 @@ finish <- function(m) {
 #'             the `location` and `scale` formulas.
 #' @param light If `TRUE`, the design matrices are removed from the estimated
 #'              model to save some memory.
+#' @param maxit The maximum number of iterations of the Fisher scoring
+#'              algorithm.
+#' @param reltol The relative convergence tolerance of the Fisher scoring
+#'               algorithm.
 #'
 #' @export
 
 lslm <- function(location,
                  scale = ~1,
                  data = environment(location),
-                 light = TRUE) {
+                 light = TRUE,
+                 maxit = 100,
+                 reltol = sqrt(.Machine$double.eps)) {
   m <- setup(location, scale, data, light, match.call())
-  m <- estimate(m)
+  m <- estimate(m, maxit, reltol)
   m <- finish(m)
   m
 }
