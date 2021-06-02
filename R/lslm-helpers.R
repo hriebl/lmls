@@ -15,7 +15,7 @@ score_gamma <- function(m) {
 #' @importFrom stats fitted
 
 info_beta <- function(m) {
-  crossprod(m$x / fitted(m, "scale")^2, m$x)
+  crossprod(m$x / fitted(m, "scale"))
 }
 
 info_gamma <- function(m) {
