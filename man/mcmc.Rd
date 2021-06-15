@@ -7,7 +7,7 @@
 mcmc(m, nsim = 1000, stepsize = sqrt(3) * (m$df)^(-1/6))
 }
 \arguments{
-\item{m}{A location-scale regression model from the \code{\link[=lslm]{lslm()}} function.}
+\item{m}{A location-scale regression model from the \code{\link[=lmls]{lmls()}} function.}
 
 \item{nsim}{The number of MCMC samples to draw.}
 
@@ -15,7 +15,7 @@ mcmc(m, nsim = 1000, stepsize = sqrt(3) * (m$df)^(-1/6))
 }
 \description{
 A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
-models from the \code{\link[=lslm]{lslm()}} function. The sampler uses a Gibbs update for the
+models from the \code{\link[=lmls]{lmls()}} function. The sampler uses a Gibbs update for the
 location coefficients and the Riemann manifold Metropolis-adjusted Langevin
 algorithm (MMALA) from Girolami and Calderhead (2011) with the Fisher-Rao
 metric tensor for the scale coefficients. The priors for the regression

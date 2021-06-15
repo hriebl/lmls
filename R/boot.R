@@ -1,9 +1,9 @@
 #' Parametric bootstrap for location-scale regression
 #'
 #' A simple parametric bootstrap algorithm for location-scale regression models
-#' from the [lslm()] function.
+#' from the [lmls()] function.
 #'
-#' @param m A location-scale regression model from the [lslm()] function.
+#' @param m A location-scale regression model from the [lmls()] function.
 #' @param nsim The number of bootstrap samples to draw.
 #' @param seed Either `NULL` or an integer that will be used in a call to
 #'             [set.seed()] before simulating the response vectors.
@@ -13,13 +13,13 @@
 
 boot <- function(m, nsim = 1000, seed = NULL) {
   if (m$light) {
-    stop("Cannot bootstrap, lslm() called with argument 'light = TRUE'")
+    stop("Cannot bootstrap, lmls() called with argument 'light = TRUE'")
   }
 
   sims <- simulate(m, nsim, seed)
 
   coefs <- lapply(sims, function(y) {
-    coef(lslm(y ~ 0 + m$x, ~ 0 + m$z))
+    coef(lmls(y ~ 0 + m$x, ~ 0 + m$z))
   })
 
   samples_beta <- lapply(coefs, `[[`, "location")

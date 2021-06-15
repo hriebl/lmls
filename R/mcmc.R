@@ -80,13 +80,13 @@ mmala_update <- function(curr_m, predictor, stepsize) {
 #' MCMC inference for location-scale regression
 #'
 #' A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
-#' models from the [lslm()] function. The sampler uses a Gibbs update for the
+#' models from the [lmls()] function. The sampler uses a Gibbs update for the
 #' location coefficients and the Riemann manifold Metropolis-adjusted Langevin
 #' algorithm (MMALA) from Girolami and Calderhead (2011) with the Fisher-Rao
 #' metric tensor for the scale coefficients. The priors for the regression
 #' coefficients are assumed to be flat.
 #'
-#' @param m A location-scale regression model from the [lslm()] function.
+#' @param m A location-scale regression model from the [lmls()] function.
 #' @param nsim The number of MCMC samples to draw.
 #' @param stepsize The step size of the MMALA update.
 #'
@@ -101,7 +101,7 @@ mmala_update <- function(curr_m, predictor, stepsize) {
 
 mcmc <- function(m, nsim = 1000, stepsize = sqrt(3) * (m$df)^(-1/6)) {
   if (m$light) {
-    stop("Cannot run MCMC, lslm() called with argument 'light = TRUE'")
+    stop("Cannot run MCMC, lmls() called with argument 'light = TRUE'")
   }
 
   mcmc_m <- m

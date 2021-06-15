@@ -87,7 +87,7 @@ setup <- function(location,
       chol_info_gamma = NULL,
       iterations      = NULL
     ),
-    class = "lslm"
+    class = "lmls"
   )
 
   m$chol_info_gamma <- chol(info_gamma(m))
@@ -163,7 +163,7 @@ finish <- function(m) {
 #'
 #' @export
 
-lslm <- function(location,
+lmls <- function(location,
                  scale = ~1,
                  data = environment(location),
                  light = TRUE,

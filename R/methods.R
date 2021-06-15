@@ -1,6 +1,6 @@
 #' @export
 
-coef.lslm <- function(object, predictors = c("location", "scale"), ...) {
+coef.lmls <- function(object, predictors = c("location", "scale"), ...) {
   predictors <- match.arg(predictors, several.ok = TRUE)
 
   if (length(predictors) > 1) {
@@ -15,13 +15,13 @@ coef.lslm <- function(object, predictors = c("location", "scale"), ...) {
 #' @importFrom stats resid
 #' @export
 
-deviance.lslm <- function(object, ...) {
+deviance.lmls <- function(object, ...) {
   sum(resid(object, "pearson")^2)
 }
 
 #' @export
 
-fitted.lslm <- function(object, predictors = c("location", "scale"), ...) {
+fitted.lmls <- function(object, predictors = c("location", "scale"), ...) {
   predictors <- match.arg(predictors, several.ok = TRUE)
 
   if (length(predictors) > 1) {
@@ -36,7 +36,7 @@ fitted.lslm <- function(object, predictors = c("location", "scale"), ...) {
 #' @importFrom stats dnorm fitted nobs
 #' @export
 
-logLik.lslm <- function(object, ...) {
+logLik.lmls <- function(object, ...) {
   y <- object$y
   location <- fitted(object, "location")
   scale <- fitted(object, "scale")
@@ -54,7 +54,7 @@ logLik.lslm <- function(object, ...) {
 #' @importFrom stats fitted qnorm resid
 #' @export
 
-plot.lslm <- function(x,
+plot.lmls <- function(x,
                       xlab = "Fitted values",
                       ylab = "Pearson residuals",
                       ...) {
@@ -74,7 +74,7 @@ plot.lslm <- function(x,
 #' @importFrom stats as.formula coef fitted model.matrix predict update
 #' @export
 
-predict.lslm <- function(object,
+predict.lmls <- function(object,
                          newdata = NULL,
                          type = c("link", "response"),
                          predictors = c("location", "scale"),
@@ -114,7 +114,7 @@ predict.lslm <- function(object,
 #' @importFrom stats coef
 #' @export
 
-print.lslm <- function(x, digits = max(3, getOption("digits") - 3), ...) {
+print.lmls <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat(
     "\nCall:\n",
     paste(deparse(x$call), sep = "\n", collapse = "\n"),
@@ -155,7 +155,7 @@ print.lslm <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 #' @importFrom stats qqline qqnorm resid
 #' @export
 
-qqnorm.lslm <- function(y,
+qqnorm.lmls <- function(y,
                         xlab = "Theoretical quantiles",
                         ylab = "Pearson residuals",
                         ...) {
@@ -167,7 +167,7 @@ qqnorm.lslm <- function(y,
 #' @importFrom stats fitted
 #' @export
 
-residuals.lslm <- function(object, type = c("response", "pearson"), ...) {
+residuals.lmls <- function(object, type = c("response", "pearson"), ...) {
   type <- match.arg(type)
   out <- object$residuals
 
@@ -181,7 +181,7 @@ residuals.lslm <- function(object, type = c("response", "pearson"), ...) {
 #' @importFrom stats fitted nobs rnorm runif
 #' @export
 
-simulate.lslm <- function(object, nsim = 1, seed = NULL, ...) {
+simulate.lmls <- function(object, nsim = 1, seed = NULL, ...) {
   # RNG handling taken from simulate.lm:
   # https://github.com/wch/r-source/blob/master/src/library/stats/R/lm.R
 
@@ -212,7 +212,7 @@ simulate.lslm <- function(object, nsim = 1, seed = NULL, ...) {
 #' @importFrom stats AIC BIC coef df.residual logLik printCoefmat resid
 #' @export
 
-summary.lslm <- function(object,
+summary.lmls <- function(object,
                          digits = max(3, getOption("digits") - 3),
                          type = c("ml", "boot", "mcmc"),
                          ...) {
@@ -288,7 +288,7 @@ summary.lslm <- function(object,
 
 #' @export
 
-vcov.lslm <- function(object, predictors = c("location", "scale"), ...) {
+vcov.lmls <- function(object, predictors = c("location", "scale"), ...) {
   predictors <- match.arg(predictors, several.ok = TRUE)
 
   if (length(predictors) > 1) {

@@ -7,7 +7,7 @@ generics::tidy
 #' @importFrom stats coef pnorm vcov
 #' @export
 
-tidy.lslm <- function(x, predictors = c("location", "scale"), ...) {
+tidy.lmls <- function(x, predictors = c("location", "scale"), ...) {
   predictors <- match.arg(predictors, several.ok = TRUE)
 
   if (length(predictors) > 1) {
@@ -40,7 +40,7 @@ generics::glance
 #' @importFrom stats AIC BIC deviance df.residual logLik
 #' @export
 
-glance.lslm <- function(x, ...) {
+glance.lmls <- function(x, ...) {
   data.frame(
     df          = x$df,
     logLik      = logLik(x),

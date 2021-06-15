@@ -8,9 +8,9 @@ y <- rnorm(n, 0 + 1 * x1 + 1 * x3, exp(-3 + 1 * x2 + 1 * x3))
 
 # integration tests -----------------------------------------------------------
 
-m <- lslm(y ~ x1 + x3, ~ x2 + x3)
+m <- lmls(y ~ x1 + x3, ~ x2 + x3)
 
-test_that("lslm() estimates are close to true values", {
+test_that("lmls() estimates are close to true values", {
   expect_roughly(coef(m, "location"), c(0, 1, 1))
   expect_roughly(coef(m, "scale"), c(-3, 1, 1))
 })
@@ -43,7 +43,7 @@ test_that("setup() creates list with correct values", {
 })
 
 test_that("setup() sets class attribute", {
-  expect_s3_class(m, "lslm")
+  expect_s3_class(m, "lmls")
 })
 
 test_that("setup() argument 'data' works with data frame", {

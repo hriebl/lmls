@@ -31,7 +31,7 @@
 #' Dr. Eileen M. Wright, Department of Medical Statistics and Evaluation,
 #' Royal Postgraduate Medical School, Du Cane Road, London, W12 0NN.
 #'
-#' The `abdom` dataset was copied into the `lslm` package from the
+#' The `abdom` dataset was copied into the `lmls` package from the
 #' `gamlss.data` package. `gamlss.data` is licensed under the GPL 2 and 3.
 #'
 #' @references

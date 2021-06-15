@@ -15,7 +15,7 @@ This data frame contains the following columns:
 Dr. Eileen M. Wright, Department of Medical Statistics and Evaluation,
 Royal Postgraduate Medical School, Du Cane Road, London, W12 0NN.
 
-The \code{abdom} dataset was copied into the \code{lslm} package from the
+The \code{abdom} dataset was copied into the \code{lmls} package from the
 \code{gamlss.data} package. \code{gamlss.data} is licensed under the GPL 2 and 3.
 }
 \usage{

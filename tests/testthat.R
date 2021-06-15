@@ -1,4 +1,4 @@
 library(testthat)
-library(lslm)
+library(lmls)
 
-test_check("lslm")
+test_check("lmls")

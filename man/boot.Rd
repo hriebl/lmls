@@ -7,7 +7,7 @@
 boot(m, nsim = 1000, seed = NULL)
 }
 \arguments{
-\item{m}{A location-scale regression model from the \code{\link[=lslm]{lslm()}} function.}
+\item{m}{A location-scale regression model from the \code{\link[=lmls]{lmls()}} function.}
 
 \item{nsim}{The number of bootstrap samples to draw.}
 
@@ -16,5 +16,5 @@ boot(m, nsim = 1000, seed = NULL)
 }
 \description{
 A simple parametric bootstrap algorithm for location-scale regression models
-from the \code{\link[=lslm]{lslm()}} function.
+from the \code{\link[=lmls]{lmls()}} function.
 }
