@@ -11,14 +11,15 @@ mcmc(m, nsim = 1000, stepsize = sqrt(3) * (m$df)^(-1/6))
 
 \item{nsim}{The number of MCMC samples to draw.}
 
-\item{stepsize}{The step size of the MCMC update.}
+\item{stepsize}{The step size of the MMALA update.}
 }
 \description{
 A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
-models from the \code{\link[=lslm]{lslm()}} function. The sampler uses the Riemann manifold
-Metropolis-adjusted Langevin algorithm (MMALA) from Girolami and Calderhead
-(2011) with the Fisher-Rao metric tensor. All priors in the model are
-assumed to be flat.
+models from the \code{\link[=lslm]{lslm()}} function. The sampler uses a Gibbs update for the
+location coefficients and the Riemann manifold Metropolis-adjusted Langevin
+algorithm (MMALA) from Girolami and Calderhead (2011) with the Fisher-Rao
+metric tensor for the scale coefficients. The priors for the regression
+coefficients are assumed to be flat.
 }
 \references{
 Girolami, M. and Calderhead, B. (2011), Riemann manifold Langevin and
