@@ -11,7 +11,7 @@ vignette: >
 abstract: |
   The linear model for location and scale (LMLS) is a multi-predictor regression model with explanatory variables for the mean (= the location) and the standard deviation (= the scale) of a normally distributed response variable. It is a simple special case of the generalized additive model for location, scale and shape (GAMLSS), which was introduced by @Rigby2005. This vignette discusses the *lmls* package for R, motivating the model class with a real-world application and illustrating the capabilities of the package: maximum likelihood and Markov chain Monte Carlo (MCMC) inference, a parametric bootstrap algorithm, and diagnostic plots for the LMLS model class.
 
-  This vignette and the *lmls* package were written for the course "Advanced Statistical Programming with R" at the University of Göttingen and were published on CRAN to provide an accessible introduction to anybody who is curious about location-scale regression.
+  The *lmls* package and this vignette were written for the course "Advanced Statistical Programming with R" at the University of Göttingen and published on CRAN to provide an accessible introduction to anybody who is curious about location-scale regression.
 bibliography: "references.bib"
 nocite: "@*"
 ---
@@ -66,6 +66,7 @@ set.seed(1337)
 <!-- operators -->
 
 \newcommand{\cov}{\operatorname{Cov}}
+\newcommand{\gammadist}{\operatorname{Gamma}}
 \newcommand{\var}{\operatorname{Var}}
 
 \newcommand{\E}{\mathbb{E}}
@@ -137,7 +138,7 @@ From this representation, we can extend the simple linear regression model and u
 y_i \ind \N(\beta_0 + x_i \beta_1, (\exp(\gamma_0 + x_i \gamma_1))^2),
 (\#eq:lmls)
 \end{equation}
-which is a minimal linear model for location and scale (LMLS). The regression coefficients $\gamma_0$ and $\gamma_1$ are the intercept and the slope parameter for the log-standard deviation, and the $\exp$ function is the inverse link (or response) function. It ensures that the predictions for the standard deviation are always valid (= positive). This step is necessary, because the linear predictor $\gamma_0 + x_i \gamma_1$ can become zero or negative for some choices of $\gamma_0$ and $\gamma_1$.
+which is a minimal linear model for location and scale (LMLS). The regression coefficients $\gamma_0$ and $\gamma_1$ are the intercept and the slope parameter for the log-standard deviation, and the exponential function is the inverse link (or response) function. It ensures that the predictions for the standard deviation are always valid (=&nbsp;positive). This step is necessary, because the linear predictor $\gamma_0 + x_i \gamma_1$ can become zero or negative for some choices of $\gamma_0$ and $\gamma_1$.
 
 Using the *lmls* package, we can estimate Model \@ref(eq:lmls) for the *abdom* dataset with a maximum likelihood algorithm running the following line of code:
 
@@ -191,7 +192,9 @@ ggplot(abdom, aes(x, y)) +
 
 # Statistical inference {#sec:inference}
 
-The `lmls` package implements two inference algorithms: a frequentist maximum likelihood (ML) algorithm, which it uses by default, and a Bayesian Markov chain Monte Carlo (MCMC) algorithm.
+The `lmls` package implements two inference algorithms: a frequentist maximum likelihood (ML) algorithm, which it uses by default, and a Bayesian Markov chain Monte Carlo (MCMC) algorithm. The derivatives that are required for these inference algorithms are derived in the Appendix in Section \@ref(sec:appendix).
+
+\pagebreak
 
 To simplify the notation in this and the next section, we first define the response vector $\yvec = [y_1, \dots, y_n]'$, the design matrices $\xmat = [\xvec_1', \dots, \xvec_n']'$ and $\zmat = [\zvec_1', \dots, \zvec_n']'$, and the standard deviation of the $i$-th observation $\sigma_i = \exp(\zvec_i'\gammavec)$. Finally, let $\wmat$ be the weight matrix
 \begin{equation}
@@ -247,7 +250,7 @@ and
 \end{equation}
 Setting the RHS of Equation \@ref(eq:bias1) equal to the RHS of Equation \@ref(eq:bias2) and taking expectations yields
 $$\E(\log{|y_i - \mu_i|}) - \log{\sigma_i} = \underbrace{1/2 \cdot (\psi(1/2) + \log 2)}_{\approx -0.635},$$
-where $\psi$ is the digamma function. The term $\psi(1/2) + \log 2$ follows from the relationship between the $\chi^2$ and the gamma distribution and from the logarithmic expectation of the gamma distribution. Rearranging the equation to
+where $\psi$ is the digamma function. The term $\psi(1/2) + \log 2$ follows from the fact that a $\chi^2(\nu)$ distribution is identical to a $\gammadist(k = \nu/2, \theta = 2)$ distribution, and that for $X \sim \gammadist(k, \theta)$, we have $\E(\log X) = \psi(k) + \log\theta$. Rearranging the equation to
 $$\E\underbrace{(\log{|y_i - \mu_i|} + 0.635)}_{= s_i} = \log{\sigma_i}$$
 shows that $s_i$ is an unbiased estimator for $\log{\sigma_i}$. Unfortunately, we do not know the true $\mu_i$ in practice and have to use the unbiased estimator $\xvec_i'\betaols$ as an approximation instead.
 
@@ -264,7 +267,7 @@ shows that $s_i$ is an unbiased estimator for $\log{\sigma_i}$. Unfortunately, w
 
 ## Markov chain Monte Carlo
 
-To run the MCMC sampler on an existing LMLS, we can call the `mcmc()` function on the corresponding object. The sampler requires a model object that contains the design matrices, so we need to make sure the `lmls()` function was called with the argument `light = FALSE`. Finally, we can use the `summary()` function with the argument `type = "mcmc"` to output some summary statistics of the posterior samples.
+To estimate an LMLS with MCMC, we can call the `mcmc()` function on an existing model object. The sampler requires a model object that contains the design matrices, so we need to make sure the `lmls()` function was called with the argument `light = FALSE`. Finally, we can use the `summary()` function with the argument `type = "mcmc"` to output some summary statistics of the posterior samples.
 
 ```{r abdom-mcmc-1}
 m3 <- lmls(y ~ poly(x, 2), ~ x, data = abdom, light = FALSE)
@@ -273,7 +276,7 @@ m3 <- mcmc(m3)
 summary(m3, type = "mcmc")
 ```
 
-The posterior samples for one regression coefficient, for example for $\gamma_1$, can be extracted and plotted like this:
+The posterior samples for one regression coefficient, $\gamma_1$ in this case, can be extracted and plotted as follows:
 
 ```{r abdom-mcmc-2, include = FALSE}
 theme_update(axis.title.y.left = element_text(margin = margin(r = 5.5)))
@@ -302,11 +305,20 @@ p1 + p2
 theme_update(axis.title.y.left = element_text(margin = margin(r = 16.5)))
 ```
 
-\clearpage
+### MCMC algorithm
 
-### Full conditional of $\betavec$
+The MCMC algorithm assumes flat priors for $\betavec$ and $\gammavec$ and works as follows:
 
-The full conditional of $\betavec$ is given by
+1. Initialize $\betavec^{(0)}$ and $\gammavec^{(0)}$ with the ML estimates.
+2. Set $k = 1$.
+3. Repeat the following steps *nsim* times:
+   1. Sample $\betavec^{(k)}$ from the full conditional in a Gibbs update step (see Section \@ref(sec:fullcond)).
+   2. Sample $\gammavec^{(k)}$ with the Riemann manifold Metropolis-adjusted Langevin algorithm (MMALA) from @Girolami2011 using the Fisher-Rao metric tensor.
+   3. Increase $k$ by 1.
+
+### Full conditional of $\betavec$ {#sec:fullcond}
+
+The full conditional of $\betavec$ used in the Gibbs update step is given by
 $$p(\betavec \mid \cdot\,) \propto \exp(-1/2 \cdot (\yvec - \xmat\betavec)' \wmat (\yvec - \xmat\betavec)) \cdot p(\betavec) \cdot p(\gammavec),$$
 where the weight matrix $\wmat$ is defined as in Equation \@ref(eq:wmat). The priors $p(\betavec)$ and $p(\gammavec)$ can be ignored, because we assume them to be flat. It can be shown with some tedious but simple linear algebra that
 \begin{align*}
@@ -318,28 +330,19 @@ $$p(\betavec \mid \cdot\,) \propto \exp(-1/2 \cdot (\betavec - \betawls)' \xmat'
 which implies the following multivariate normal distribution:
 $$\betavec \mid \cdot\, \sim \N(\betawls, (\xmat'\wmat\xmat)^{-1}).$$
 
-### MCMC algorithm
-
-The MCMC algorithm assumes flat priors for $\betavec$ and $\gammavec$ and works as follows:
-
-1. Initialize $\betavec^{(0)}$ and $\gammavec^{(0)}$ with the ML estimates.
-2. Set $k = 1$.
-3. Repeat the following steps *nsim* times:
-   1. Sample $\betavec^{(k)}$ from the full conditional in a Gibbs update step.
-   2. Sample $\gammavec^{(k)}$ with the Riemann manifold Metropolis-adjusted Langevin algorithm (MMALA) from @Girolami2011 using the Fisher-Rao metric tensor.
-   3. Increase $k$ by 1.
+\pagebreak
 
 # Comparison with other R packages
 
-There are a number of R packages with similar capabilities as *lmls*. The popular *mgcv* package, which is typically used to estimate generalized additive models (GAMs), added support for multi-predictor models including the LMLS with a normally distributed response variable in version 1.8. The *gamlss* package implements generalized additive models for location, scale and shape [GAMLSS, @Rigby2005] in a very general way, and the *bamlss* package is a Bayesian alternative to the *gamlss* package.
+There are a number of R packages with similar capabilities as *lmls*. The popular *mgcv* package [@Wood2017], which is typically used to estimate generalized additive models (GAMs), added support for multi-predictor models including the LMLS with a normally distributed response variable in version 1.8. The *gamlss* package implements generalized additive models for location, scale and shape [GAMLSS, @Rigby2005] in a very general way, and the *bamlss* package [@Umlauf2018] is a Bayesian alternative to the *gamlss* package.
 
-Compared to these packages, the scope of the *lmls* package is much narrower. It implements only the LMLS with a normally distributed response variable. Other response distributions or the regularization of covariate effects are not supported. Instead, *lmls* aims to be...
+Compared to these packages, the scope of the *lmls* package is much narrower. Its functionality is limited to the LMLS with a normally distributed response variable. Other response distributions or the regularization of covariate effects are not supported. Instead, *lmls* aims to be...
 
-- ... **easy to use**. The few exported functions are intuitive and simple.
-- ... **stable**. As *lmls* implements only one single, narrow model class, it can use specific and robust inference algorithms.
+- ... **user-friendly**. The few exported functions are intuitive and simple.
+- ... **stable**. As *lmls* implements only one single, narrow model class, it can make use of specific and robust inference algorithms.
 - ... **fast**. In fact, *lmls* seems to be 3.5 to 4 times faster than *mgcv* and *gamlss*. See below for a small benchmark on the *abdom* dataset.
 - ... **lightweight**. *lmls* is written in pure R and depends only on the *generics* package.
-- ... **accessible**. *lmls* was used as a teaching material for a university course. The code is modular and comprehensible, even to R beginners.
+- ... **comprehensible**. *lmls* was used as a teaching material for a university course. The code is modular and accessible, even to R beginners.
 - ... **well-tested**. Most of the code is covered by unit and integration tests.
 
 Finally, we compare the performance of the *lmls* package on the *abdom* dataset with *mgcv* and *gamlss* using the *microbenchmark* package. The results of the benchmark are shown in Figure \@ref(fig:abdom-bench-2).
@@ -369,7 +372,7 @@ ggplot(bench, aes(time / 1e6, expr, color = expr, fill = expr)) +
   ylab("Package")
 ```
 
-# Appendix: Score and Fisher information
+# Appendix: Score and Fisher information {#sec:appendix}
 
 The inference algorithms from Section \@ref(sec:inference) require the score (= the gradient of the log-likelihood) and the Fisher information (= the covariance of the score) with respect to $\betavec$ and $\gammavec$.
 
@@ -381,7 +384,7 @@ s(\betavec)
 = \frac{\partial\ell}{\partial\betavec}
 = \xmat'\qvec,
 $$
-where $\qvec = [q_i] = (y_i - \mu_i) / \sigma^2_i$ is an $n$-dimensional column vector. The corresponding Fisher information is given by
+where $\qvec$ is an $n$-dimensional column vector with the elements $q_i = (y_i - \mu_i) / \sigma^2_i$. The corresponding Fisher information is given by
 $$
 \I(\betavec)
 = \cov(s(\betavec))
@@ -411,7 +414,7 @@ s(\gammavec)
 = \frac{\partial\ell}{\partial\gammavec}
 = \zmat'\rvec,
 $$
-where $\rvec = [r_i] = (y_i - \mu_i) / \sigma_i)^2 - 1$ is an $n$-dimensional column vector. The corresponding Fisher information is given by
+where $\rvec$ is an $n$-dimensional column vector with the elements $r_i = ((y_i - \mu_i) / \sigma_i)^2 - 1$. The corresponding Fisher information is given by
 $$
 \I(\gammavec)
 = \cov(s(\gammavec))
