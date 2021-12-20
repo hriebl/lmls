@@ -4,26 +4,38 @@
 \alias{mcmc}
 \title{MCMC inference for location-scale regression}
 \usage{
-mcmc(m, nsim = 1000, stepsize = sqrt(3) * (m$df)^(-1/6))
+mcmc(m, num_samples = 1000, num_warmup = 1000, target_accept = 0.8)
 }
 \arguments{
 \item{m}{A location-scale regression model from the \code{\link[=lmls]{lmls()}} function.}
 
-\item{nsim}{The number of MCMC samples to draw.}
+\item{num_samples}{The number of MCMC samples after the warm-up.
+Defaults to 1000.}
 
-\item{stepsize}{The step size of the MMALA update.}
+\item{num_warmup}{The number of MCMC samples for the warm-up.
+Defaults to 1000.}
+
+\item{target_accept}{The target acceptance rate for the dual averaging
+algorithm used for the warm-up. Defaults to 0.8.}
 }
 \description{
-A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
-models from the \code{\link[=lmls]{lmls()}} function. The sampler uses a Gibbs update for the
-location coefficients and the Riemann manifold Metropolis-adjusted Langevin
-algorithm (MMALA) from Girolami and Calderhead (2011) with the Fisher-Rao
-metric tensor for the scale coefficients. The priors for the regression
-coefficients are assumed to be flat.
+A Markov chain Monte Carlo (MCMC) sampler for the use with location-scale
+regression models from the \code{\link[=lmls]{lmls()}} function. The sampler uses Gibbs updates
+for the location coefficients and the Riemann manifold Metropolis-adjusted
+Langevin algorithm (MMALA) from Girolami and Calderhead (2011) with the
+Fisher-Rao metric tensor for the scale coefficients. The priors for the
+regression coefficients are assumed to be flat.
+
+To find the optimal step size for the MMALA updates, the dual averaging
+algorithm from Nesterov (2009) is used during a warm-up phase.
 }
 \references{
 Girolami, M. and Calderhead, B. (2011), Riemann manifold Langevin and
 Hamiltonian Monte Carlo methods. Journal of the Royal Statistical Society:
 Series B (Statistical Methodology), 73: 123-214.
 \url{https://doi.org/10.1111/j.1467-9868.2010.00765.x}
+
+Nesterov, Y. (2009), Primal-dual subgradient methods for convex problems.
+Mathematical Programming, 120: 221–259.
+\url{https://doi.org/10.1007/s10107-007-0149-x}
 }

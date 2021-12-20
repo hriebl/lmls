@@ -14,7 +14,7 @@ m <- set_coef(m, "location", beta)
 m <- set_coef(m, "scale", gamma)
 
 f <- function(x, predictor) {
-  logLik(set_coef(m, predictor, x))
+  loglik(set_coef(m, predictor, x))
 }
 
 test_that("score of beta is correct", {

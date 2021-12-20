@@ -1,3 +1,13 @@
+# log-likelihood --------------------------------------------------------------
+
+loglik <- function(m) {
+  y <- m$y
+  location <- fitted(m, "location")
+  scale <- fitted(m, "scale")
+
+  sum(dnorm(y, location, scale, log = TRUE))
+}
+
 # derivatives -----------------------------------------------------------------
 
 #' @importFrom stats fitted resid

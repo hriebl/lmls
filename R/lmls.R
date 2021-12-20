@@ -95,8 +95,6 @@ setup <- function(location,
   m
 }
 
-#' @importFrom stats logLik
-
 estimate <- function(m, maxit = 100, reltol = sqrt(.Machine$double.eps)) {
   m <- init_beta(m)
   m <- init_gamma(m)
@@ -108,10 +106,10 @@ estimate <- function(m, maxit = 100, reltol = sqrt(.Machine$double.eps)) {
   while (it < maxit && enough) {
     it <- it + 1
 
-    before <- logLik(m)
+    before <- loglik(m)
     m <- update_gamma(m)
     m <- update_beta(m)
-    after <- logLik(m)
+    after <- loglik(m)
 
     enough <- abs(after - before) > reltol * (abs(before) + reltol)
   }

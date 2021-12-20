@@ -37,13 +37,13 @@ tidy.lmls <- function(x, predictors = c("location", "scale"), ...) {
 
 generics::glance
 
-#' @importFrom stats AIC BIC deviance df.residual logLik
+#' @importFrom stats AIC BIC deviance df.residual
 #' @export
 
 glance.lmls <- function(x, ...) {
   data.frame(
     df          = x$df,
-    logLik      = logLik(x),
+    logLik      = loglik(x),
     AIC         = AIC(x),
     BIC         = BIC(x),
     deviance    = deviance(x),

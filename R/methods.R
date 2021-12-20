@@ -37,11 +37,7 @@ fitted.lmls <- function(object, predictors = c("location", "scale"), ...) {
 #' @export
 
 logLik.lmls <- function(object, ...) {
-  y <- object$y
-  location <- fitted(object, "location")
-  scale <- fitted(object, "scale")
-
-  out <- sum(dnorm(y, location, scale, log = TRUE))
+  out <- loglik(object)
 
   attr(out, "df") <- object$df
   attr(out, "nobs") <- nobs(object)
@@ -209,7 +205,7 @@ simulate.lmls <- function(object, nsim = 1, seed = NULL, ...) {
   out
 }
 
-#' @importFrom stats AIC BIC coef df.residual logLik printCoefmat resid
+#' @importFrom stats AIC BIC coef df.residual printCoefmat resid
 #' @export
 
 summary.lmls <- function(object,
@@ -267,7 +263,7 @@ summary.lmls <- function(object,
 
   cat(
     "Log-likelihood:",
-    format(signif(logLik(object), digits)),
+    format(signif(loglik(object), digits)),
     "\n"
   )
 
