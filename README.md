@@ -10,8 +10,8 @@
 scale. Those models are multi-predictor regression models with
 explanatory variables for the mean (= the location) and the standard
 deviation (= the scale) of a normally distributed response variable.
-They are a straightforward instance of generalized additive models for
-location, scale and shape (GAMLSS), discussed by Rigby and Stasinopoulos
+They are a special case of generalized additive models for location,
+scale and shape (GAMLSS), discussed by Rigby and Stasinopoulos
 (<https://doi.org/10.1111/j.1467-9876.2005.00510.x>).
 
 The *lmls* package provides functions for maximum likelihood and Markov
