@@ -4,12 +4,12 @@
 \alias{boot}
 \title{Parametric bootstrap for location-scale regression}
 \usage{
-boot(m, nsim = 1000, seed = NULL)
+boot(m, num_samples = 1000, seed = NULL)
 }
 \arguments{
 \item{m}{A location-scale regression model from the \code{\link[=lmls]{lmls()}} function.}
 
-\item{nsim}{The number of bootstrap samples to draw.}
+\item{num_samples}{The number of bootstrap samples to draw.}
 
 \item{seed}{Either \code{NULL} or an integer that will be used in a call to
 \code{\link[=set.seed]{set.seed()}} before simulating the response vectors.}
