@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![test-coverage](https://github.com/hriebl/lmls/workflows/test-coverage/badge.svg)](https://github.com/hriebl/lmls/actions)
+[![check-standard](https://github.com/hriebl/lmls/workflows/check-standard/badge.svg)](https://github.com/hriebl/lmls/actions)
 <!-- badges: end -->
 
 *lmls* is an R package which deals with linear models for location and
