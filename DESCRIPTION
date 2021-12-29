@@ -12,8 +12,10 @@ Depends: R (>= 3.5.0)
 Imports: generics (>= 0.1.0)
 Suggests:
     bookdown,
+    coda,
     ggplot2,
     knitr,
+    mgcv,
     mvtnorm,
     numDeriv,
     patchwork,
