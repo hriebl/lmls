@@ -14,6 +14,9 @@ abstract: |
   The *lmls* package and this vignette were written for the "Advanced Statistical Programming" course at the University of Göttingen and published on CRAN to provide an accessible introduction to anybody who is curious about location-scale regression, and as a basis for the implementation of additional inference algorithms and model extensions.
 bibliography: "references.bib"
 nocite: "@*"
+pkgdown:
+  as_is: true
+  extension: pdf
 ---
 
 ```{r setup, include = FALSE}

@@ -8,6 +8,8 @@ Description: The Gaussian location-scale regression model is a multi-predictor
     deviation (= scale) of a response variable. This package implements maximum
     likelihood and Markov chain Monte Carlo (MCMC) inference, a parametric
     bootstrap algorithm, and diagnostic plots for the model class.
+License: MIT + file LICENSE
+URL: https://hriebl.github.io/lmls/
 Depends: R (>= 3.5.0)
 Imports: generics (>= 0.1.0)
 Suggests:
@@ -22,7 +24,6 @@ Suggests:
     patchwork,
     rmarkdown,
     testthat (>= 3.0.0)
-License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
