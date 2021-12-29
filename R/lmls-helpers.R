@@ -1,5 +1,7 @@
 # log-likelihood --------------------------------------------------------------
 
+#' @importFrom stats dnorm fitted
+
 loglik <- function(m) {
   y <- m$y
   location <- fitted(m, "location")
@@ -13,13 +15,13 @@ loglik <- function(m) {
 #' @importFrom stats fitted resid
 
 score_beta <- function(m) {
-  drop((resid(m) / fitted(m, "scale")^2) %*% m$x)
+  drop((resid(m, "response") / fitted(m, "scale")^2) %*% m$x)
 }
 
 #' @importFrom stats resid
 
 score_gamma <- function(m) {
-  drop((resid(m, "pearson")^2 - 1) %*% m$z)
+  drop((resid(m, "deviance")^2 - 1) %*% m$z)
 }
 
 #' @importFrom stats fitted

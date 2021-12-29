@@ -17,7 +17,7 @@ init_gamma <- function(m) {
   # see https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation
   # and https://arxiv.org/abs/1503.06266
 
-  fit <- lm.fit(m$z, 0.6351814 + log(abs(resid(m))))
+  fit <- lm.fit(m$z, 0.6351814 + log(abs(resid(m, "response"))))
 
   m$coefficients$scale <- coef(fit)
   m$fitted.values$scale <- exp(fitted(fit))

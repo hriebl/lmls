@@ -1,39 +1,35 @@
 #' @export
 
-coef.lmls <- function(object, predictors = c("location", "scale"), ...) {
-  predictors <- match.arg(predictors, several.ok = TRUE)
+coef.lmls <- function(object, predictor = c("location", "scale"), ...) {
+  predictor <- match.arg(predictor, several.ok = TRUE)
 
-  if (length(predictors) > 1) {
-    out <- object$coefficients[predictors]
+  if (length(predictor) == 1) {
+    object$coefficients[[predictor]]
   } else {
-    out <- object$coefficients[[predictors]]
+    object$coefficients[predictor]
   }
-
-  out
 }
 
 #' @importFrom stats resid
 #' @export
 
 deviance.lmls <- function(object, ...) {
-  sum(resid(object, "pearson")^2)
+  sum(resid(object, "deviance")^2)
 }
 
 #' @export
 
-fitted.lmls <- function(object, predictors = c("location", "scale"), ...) {
-  predictors <- match.arg(predictors, several.ok = TRUE)
+fitted.lmls <- function(object, predictor = c("location", "scale"), ...) {
+  predictor <- match.arg(predictor, several.ok = TRUE)
 
-  if (length(predictors) > 1) {
-    out <- object$fitted.values[predictors]
+  if (length(predictor) == 1) {
+    object$fitted.values[[predictor]]
   } else {
-    out <- object$fitted.values[[predictors]]
+    object$fitted.values[predictor]
   }
-
-  out
 }
 
-#' @importFrom stats dnorm fitted nobs
+#' @importFrom stats nobs
 #' @export
 
 logLik.lmls <- function(object, ...) {
@@ -52,11 +48,11 @@ logLik.lmls <- function(object, ...) {
 
 plot.lmls <- function(x,
                       xlab = "Fitted values",
-                      ylab = "Pearson residuals",
+                      ylab = "Deviance residuals",
                       ...) {
   plot(
     x = fitted(x, "location"),
-    y = resid(x, "pearson"),
+    y = resid(x, "deviance"),
     xlab = xlab,
     ylab = ylab,
     ...
@@ -64,6 +60,7 @@ plot.lmls <- function(x,
 
   abline(h = qnorm(c(0.025, 0.975)), lty = "dashed")
   abline(h = 0)
+
   invisible(x)
 }
 
@@ -72,36 +69,41 @@ plot.lmls <- function(x,
 
 predict.lmls <- function(object,
                          newdata = NULL,
+                         predictor = c("location", "scale"),
                          type = c("link", "response"),
-                         predictors = c("location", "scale"),
                          ...) {
-  predictors <- match.arg(predictors, several.ok = TRUE)
+  predictor <- match.arg(predictor, several.ok = TRUE)
   type <- match.arg(type)
 
+  if (length(predictor) > 1) {
+    out <- lapply(predictor, function(p) {
+      predict(object, newdata, p, type)
+    })
+
+    names(out) <- predictor
+
+    return(out)
+  }
+
   if (is.null(newdata)) {
-    out <- fitted(object, predictors)
+    out <- fitted(object, predictor)
 
-    if (type == "link" && any(predictors == "scale")) {
-      out$scale <- log(out$scale)
+    if (predictor == "scale" && type == "link") {
+      out <- log(out)
     }
-  } else {
-    if (length(predictors) > 1) {
-      out <- lapply(predictors, function(p) {
-        predict(object, newdata, type, p)
-      })
 
-      names(out) <- predictors
-    } else {
-      formula <- as.formula(object$call[[predictors]])
-      formula <- update(formula, NULL ~ .)
+    return(out)
+  }
 
-      mm <- model.matrix(formula, newdata)
-      out <- drop(mm %*% coef(object, predictors))
+  arg <- object$call[[predictor]]
+  formula <- update(as.formula(arg), NULL ~ .)
+  x <- model.matrix(formula, newdata)
 
-      if (type == "response" && predictors == "scale") {
-        out <- exp(out)
-      }
-    }
+  beta <- coef(object, predictor)
+  out <- drop(x %*% beta)
+
+  if (predictor == "scale" && type == "response") {
+    out <- exp(out)
   }
 
   out
@@ -118,14 +120,13 @@ print.lmls <- function(x, digits = max(3, getOption("digits") - 3), ...) {
     sep = ""
   )
 
-  if (length(coef(x, "location"))) {
-    cat("Location coefficients:\n")
+  pretty <- function(x) {
+    print.default(format(x, digits = digits), print.gap = 2, quote = FALSE)
+  }
 
-    print.default(
-      x = format(coef(x, "location"), digits = digits),
-      print.gap = 2,
-      quote = FALSE
-    )
+  if (length(coef(x, "location"))) {
+    cat("Location coefficients (identity link):\n")
+    pretty(coef(x, "location"))
   } else {
     cat("No location coefficients\n")
   }
@@ -133,18 +134,14 @@ print.lmls <- function(x, digits = max(3, getOption("digits") - 3), ...) {
   cat("\n")
 
   if (length(coef(x, "scale"))) {
-    cat("Scale coefficients:\n")
-
-    print.default(
-      x = format(coef(x, "scale"), digits = digits),
-      print.gap = 2,
-      quote = FALSE
-    )
+    cat("Scale coefficients (log link):\n")
+    pretty(coef(x, "scale"))
   } else {
     cat("No scale coefficients\n")
   }
 
   cat("\n")
+
   invisible(x)
 }
 
@@ -153,21 +150,24 @@ print.lmls <- function(x, digits = max(3, getOption("digits") - 3), ...) {
 
 qqnorm.lmls <- function(y,
                         xlab = "Theoretical quantiles",
-                        ylab = "Pearson residuals",
+                        ylab = "Deviance residuals",
                         ...) {
-  qqnorm(resid(y, "pearson"), xlab = xlab, ylab = ylab, ...)
-  qqline(resid(y, "pearson"))
+  qqnorm(resid(y, "deviance"), xlab = xlab, ylab = ylab, ...)
+  qqline(resid(y, "deviance"))
+
   invisible(y)
 }
 
 #' @importFrom stats fitted
 #' @export
 
-residuals.lmls <- function(object, type = c("response", "pearson"), ...) {
+residuals.lmls <- function(object,
+                           type = c("deviance", "pearson", "response"),
+                           ...) {
   type <- match.arg(type)
   out <- object$residuals
 
-  if (type == "pearson") {
+  if (type != "response") {
     out <- out / fitted(object, "scale")
   }
 
@@ -178,7 +178,7 @@ residuals.lmls <- function(object, type = c("response", "pearson"), ...) {
 #' @export
 
 simulate.lmls <- function(object, nsim = 1, seed = NULL, ...) {
-  # RNG handling taken from simulate.lm:
+  # RNG handling taken from simulate.lm():
   # https://github.com/wch/r-source/blob/master/src/library/stats/R/lm.R
 
   if (!exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
@@ -196,7 +196,7 @@ simulate.lmls <- function(object, nsim = 1, seed = NULL, ...) {
 
   n <- nobs(object) * nsim
   out <- rnorm(n, fitted(object, "location"), fitted(object, "scale"))
-  dim(out) <- c(nobs(object), nsim)
+  out <- matrix(out, nrow = nobs(object), ncol = nsim)
 
   out <- as.data.frame(out)
   names(out) <- paste("sim", seq_len(nsim), sep = "_")
@@ -209,18 +209,16 @@ simulate.lmls <- function(object, nsim = 1, seed = NULL, ...) {
 #' @export
 
 summary.lmls <- function(object,
-                         digits = max(3, getOption("digits") - 3),
                          type = c("ml", "boot", "mcmc"),
+                         digits = max(3, getOption("digits") - 3),
                          ...) {
   type <- match.arg(type)
 
   if (type != "ml") {
-    coefmat <- function(m, predictor) {
-      coefmat_samples(m, predictor, type)
-    }
+    coefmat <- function(m, predictor) coefmat_samples(m, predictor, type)
 
     if (is.null(object[[type]]$location) || is.null(object[[type]]$scale)) {
-      stop("Model does not include samples, run boot() or mcmc() first")
+      stop("Model does not include samples, run ", type, "() first")
     }
   }
 
@@ -232,13 +230,13 @@ summary.lmls <- function(object,
   )
 
   if (df.residual(object) > 5) {
-    cat("Pearson residuals:\n")
-    print(summary(resid(object, "pearson"), digits = digits))
+    cat("Deviance residuals:\n")
+    print(summary(resid(object, "deviance"), digits = digits))
     cat("\n")
   }
 
   if (length(coef(object, "location"))) {
-    cat("Location coefficients (identity link function):\n")
+    cat("Location coefficients (identity link):\n")
     printCoefmat(coefmat(object, "location"), digits = digits, ...)
   } else {
     cat("No location coefficients\n")
@@ -247,7 +245,7 @@ summary.lmls <- function(object,
   cat("\n")
 
   if (length(coef(object, "scale"))) {
-    cat("Scale coefficients (log link function):\n")
+    cat("Scale coefficients (log link):\n")
     printCoefmat(coefmat(object, "scale"), digits = digits, ...)
   } else {
     cat("No scale coefficients\n")
@@ -255,43 +253,28 @@ summary.lmls <- function(object,
 
   cat("\n")
 
-  cat(
-    "Residual degrees of freedom:",
-    format(signif(df.residual(object), digits)),
-    "\n"
-  )
+  pretty <- function(x, y) {
+    cat(x, ": ", format(signif(y), getOption("digits")), "\n", sep = "")
+  }
 
-  cat(
-    "Log-likelihood:",
-    format(signif(loglik(object), digits)),
-    "\n"
-  )
+  pretty("Residual degrees of freedom", df.residual(object))
+  pretty("Log-likelihood", loglik(object))
+  pretty("AIC", AIC(object))
+  pretty("BIC", BIC(object))
 
-  cat(
-    "AIC:",
-    format(signif(AIC(object), digits)),
-    "\n"
-  )
-
-  cat(
-    "BIC:",
-    format(signif(BIC(object), digits)),
-    "\n\n"
-  )
+  cat("\n")
 
   invisible(object)
 }
 
 #' @export
 
-vcov.lmls <- function(object, predictors = c("location", "scale"), ...) {
-  predictors <- match.arg(predictors, several.ok = TRUE)
+vcov.lmls <- function(object, predictor = c("location", "scale"), ...) {
+  predictor <- match.arg(predictor, several.ok = TRUE)
 
-  if (length(predictors) > 1) {
-    out <- object$vcov[predictors]
+  if (length(predictor) == 1) {
+    object$vcov[[predictor]]
   } else {
-    out <- object$vcov[[predictors]]
+    object$vcov[predictor]
   }
-
-  out
 }

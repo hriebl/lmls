@@ -7,21 +7,21 @@ generics::tidy
 #' @importFrom stats coef pnorm vcov
 #' @export
 
-tidy.lmls <- function(x, predictors = c("location", "scale"), ...) {
-  predictors <- match.arg(predictors, several.ok = TRUE)
+tidy.lmls <- function(x, predictor = c("location", "scale"), ...) {
+  predictor <- match.arg(predictor, several.ok = TRUE)
 
-  if (length(predictors) > 1) {
-    out <- lapply(predictors, function(p) tidy(x, p))
+  if (length(predictor) > 1) {
+    out <- lapply(predictor, function(p) tidy(x, p))
     out <- do.call(rbind, out)
   } else {
-    std.error <- sqrt(diag(vcov(x, predictors)))
-    statistic <- coef(x, predictors) / std.error
+    std.error <- sqrt(diag(vcov(x, predictor)))
+    statistic <- coef(x, predictor) / std.error
     p.value <- 2 * pnorm(-abs(statistic))
 
     out <- data.frame(
-      predictor = predictors,
-      term      = names(coef(x, predictors)),
-      estimate  = coef(x, predictors),
+      predictor = predictor,
+      term      = names(coef(x, predictor)),
+      estimate  = coef(x, predictor),
       std.error = std.error,
       statistic = statistic,
       p.value   = p.value,
