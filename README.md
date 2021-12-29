@@ -7,6 +7,8 @@
 
 [![R CMD
 check](https://github.com/hriebl/lmls/workflows/R-CMD-check/badge.svg)](https://github.com/hriebl/lmls/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/hriebl/lmls/branch/main/graph/badge.svg)](https://app.codecov.io/gh/hriebl/lmls?branch=main)
 <!-- badges: end -->
 
 *lmls* is an R package which deals with linear models for location and
