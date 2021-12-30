@@ -80,4 +80,4 @@ ggplot(df, aes(x, y)) +
 
 ## Vignette
 
-For more details, see the package vignette.
+For more details, see the [package vignette](https://hriebl.github.io/lmls/articles/lmls.pdf).
