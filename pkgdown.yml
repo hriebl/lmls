@@ -3,7 +3,7 @@ pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   lmls: lmls.pdf
-last_built: 2021-12-30T00:11Z
+last_built: 2022-01-03T00:50Z
 urls:
   reference: https://hriebl.github.io/lmls/reference
   article: https://hriebl.github.io/lmls/articles

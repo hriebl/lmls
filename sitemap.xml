@@ -28,6 +28,9 @@
     <loc>https://hriebl.github.io/lmls/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://hriebl.github.io/lmls/reference/lmls-methods.html</loc>
+  </url>
+  <url>
     <loc>https://hriebl.github.io/lmls/reference/lmls.html</loc>
   </url>
   <url>
@@ -35,5 +38,8 @@
   </url>
   <url>
     <loc>https://hriebl.github.io/lmls/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://hriebl.github.io/lmls/reference/summary.lmls.html</loc>
   </url>
 </urlset>
