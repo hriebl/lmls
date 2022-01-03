@@ -1,4 +1,4 @@
-#' Parametric bootstrap for location-scale regression
+#' Parametric bootstrap for LMLS
 #'
 #' A simple parametric bootstrap algorithm for location-scale regression models
 #' from the [lmls()] function.
@@ -8,6 +8,12 @@
 #' @param seed Either `NULL` or an integer that will be used in a call to
 #'             [set.seed()] before simulating the response vectors.
 #'
+#' @examples
+#' library(lmls)
+#' m <- lmls(y ~ poly(x, 2), ~ x, data = abdom, light = FALSE)
+#' m <- boot(m)
+#' summary(m, type = "boot")
+#' hist(m$boot$scale[, 2])
 #' @importFrom stats coef simulate
 #' @export
 

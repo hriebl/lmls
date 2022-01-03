@@ -16,17 +16,16 @@ scale. Those models are multi-predictor regression models with
 explanatory variables for the mean (= the location) and the standard
 deviation (= the scale) of a normally distributed response variable.
 They are a special case of generalized additive models for location,
-scale and shape (GAMLSS), discussed by Rigby and Stasinopoulos
-(<https://doi.org/10.1111/j.1467-9876.2005.00510.x>).
+scale and shape (GAMLSS), as described by [Rigby and Stasinopoulos
+(2005)](https://doi.org/10.1111/j.1467-9876.2005.00510.x).
 
 The *lmls* package provides functions for maximum likelihood and Markov
 chain Monte Carlo (MCMC) estimation, a parametric bootstrap algorithm,
 and diagnostic plots. It was written for the “Advanced Statistical
-Programming” course at the University of Göttingen. The source code is
-made available on GitHub as an accessible introduction to some
-computational aspects of location-scale regression, and as a basis for
-the implementation of additional inference algorithms and model
-extensions.
+Programming” course at the University of Göttingen. Feel free to use the
+package and the vignette as an introduction to location-scale
+regression, or as a basis for the implementation of additional inference
+algorithms and model extensions.
 
 ## Installation
 

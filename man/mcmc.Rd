@@ -2,7 +2,7 @@
 % Please edit documentation in R/mcmc.R
 \name{mcmc}
 \alias{mcmc}
-\title{MCMC inference for location-scale regression}
+\title{MCMC inference for LMLS}
 \usage{
 mcmc(m, num_samples = 1000, num_warmup = 1000, target_accept = 0.8)
 }
@@ -19,15 +19,22 @@ Defaults to 1000.}
 algorithm used for the warm-up. Defaults to 0.8.}
 }
 \description{
-A Markov chain Monte Carlo (MCMC) sampler for the use with location-scale
-regression models from the \code{\link[=lmls]{lmls()}} function. The sampler uses Gibbs updates
-for the location coefficients and the Riemann manifold Metropolis-adjusted
-Langevin algorithm (MMALA) from Girolami and Calderhead (2011) with the
-Fisher-Rao metric tensor for the scale coefficients. The priors for the
-regression coefficients are assumed to be flat.
+A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
+models from the \code{\link[=lmls]{lmls()}} function. The sampler uses Gibbs updates for the
+location coefficients and the Riemann manifold Metropolis-adjusted Langevin
+algorithm (MMALA) from Girolami and Calderhead (2011) with the Fisher-Rao
+metric tensor for the scale coefficients. The priors for the regression
+coefficients are assumed to be flat.
 
 To find the optimal step size for the MMALA updates, the dual averaging
 algorithm from Nesterov (2009) is used during a warm-up phase.
+}
+\examples{
+library(lmls)
+m <- lmls(y ~ poly(x, 2), ~ x, data = abdom, light = FALSE)
+m <- mcmc(m)
+summary(m, type = "mcmc")
+plot(m$mcmc$scale[, 2], type = "l")
 }
 \references{
 Girolami, M. and Calderhead, B. (2011), Riemann manifold Langevin and

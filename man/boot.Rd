@@ -2,7 +2,7 @@
 % Please edit documentation in R/boot.R
 \name{boot}
 \alias{boot}
-\title{Parametric bootstrap for location-scale regression}
+\title{Parametric bootstrap for LMLS}
 \usage{
 boot(m, num_samples = 1000, seed = NULL)
 }
@@ -17,4 +17,11 @@ boot(m, num_samples = 1000, seed = NULL)
 \description{
 A simple parametric bootstrap algorithm for location-scale regression models
 from the \code{\link[=lmls]{lmls()}} function.
+}
+\examples{
+library(lmls)
+m <- lmls(y ~ poly(x, 2), ~ x, data = abdom, light = FALSE)
+m <- boot(m)
+summary(m, type = "boot")
+hist(m$boot$scale[, 2])
 }

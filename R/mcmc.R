@@ -103,16 +103,16 @@ dual_averaging <- function(m, num_warmup = 1000, target_accept = 0.8,
   list(m = m, step_size = exp(log_avg_step))
 }
 
-#' MCMC inference for location-scale regression
+#' MCMC inference for LMLS
 #'
 #' @description
 #'
-#' A Markov chain Monte Carlo (MCMC) sampler for the use with location-scale
-#' regression models from the [lmls()] function. The sampler uses Gibbs updates
-#' for the location coefficients and the Riemann manifold Metropolis-adjusted
-#' Langevin algorithm (MMALA) from Girolami and Calderhead (2011) with the
-#' Fisher-Rao metric tensor for the scale coefficients. The priors for the
-#' regression coefficients are assumed to be flat.
+#' A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
+#' models from the [lmls()] function. The sampler uses Gibbs updates for the
+#' location coefficients and the Riemann manifold Metropolis-adjusted Langevin
+#' algorithm (MMALA) from Girolami and Calderhead (2011) with the Fisher-Rao
+#' metric tensor for the scale coefficients. The priors for the regression
+#' coefficients are assumed to be flat.
 #'
 #' To find the optimal step size for the MMALA updates, the dual averaging
 #' algorithm from Nesterov (2009) is used during a warm-up phase.
@@ -135,6 +135,12 @@ dual_averaging <- function(m, num_warmup = 1000, target_accept = 0.8,
 #' Mathematical Programming, 120: 221–259.
 #' <https://doi.org/10.1007/s10107-007-0149-x>
 #'
+#' @examples
+#' library(lmls)
+#' m <- lmls(y ~ poly(x, 2), ~ x, data = abdom, light = FALSE)
+#' m <- mcmc(m)
+#' summary(m, type = "mcmc")
+#' plot(m$mcmc$scale[, 2], type = "l")
 #' @importFrom stats coef
 #' @export
 

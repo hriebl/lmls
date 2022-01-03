@@ -134,7 +134,7 @@ finish <- function(m) {
   m
 }
 
-#' Location-scale regression
+#' Gaussian location-scale regression
 #'
 #' @description
 #'
@@ -159,6 +159,12 @@ finish <- function(m) {
 #' @param reltol The relative convergence tolerance of the Fisher scoring
 #'               algorithm.
 #'
+#' @examples
+#' library(lmls)
+#' m <- lmls(y ~ poly(x, 2), ~ x, data = abdom)
+#' summary(m)
+#' plot(m)
+#' qqnorm(m)
 #' @export
 
 lmls <- function(location,

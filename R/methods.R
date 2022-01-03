@@ -1,3 +1,33 @@
+#' Methods for LMLS
+#'
+#' A couple of methods for location-scale regression models from the [lmls()]
+#' function.
+#'
+#' @param object A location-scale regression model from the [lmls()] function.
+#' @param predictor The predictor to work on. Either `"location"` or `"scale"`
+#'                  or both. If both, a list with the names `"location"` and
+#'                  `"scale"` is returned.
+#' @param ... Currently ignored.
+#' @param newdata A data frame (or list or environment) with the covariate
+#'                values at which the predictions are computed. If `NULL`, the
+#'                predictions at the original data are returned.
+#' @param type Used by `predict()` and `residuals()`:
+#'             \itemize{
+#'               \item For `predict()`, `"link"` or `"response"`. If `"link"`
+#'                     (default), \eqn{\mu} and log(\eqn{\sigma}) are returned.
+#'                     If `"response"`, \eqn{\mu} and \eqn{\sigma}
+#'                     are returned.
+#'               \item For `residuals()`, `"deviance"`, `"pearson"` or
+#'                     `"response"`. If `"deviance"` (default) or `"pearson"`,
+#'                     (\eqn{y - \mu}) / \eqn{\sigma} is returned.
+#'                     If `"response"`, \eqn{y - \mu} is returned.
+#'             }
+#'
+#' @name lmls-methods
+
+NULL
+
+#' @rdname lmls-methods
 #' @export
 
 coef.lmls <- function(object, predictor = c("location", "scale"), ...) {
@@ -17,6 +47,7 @@ deviance.lmls <- function(object, ...) {
   sum(resid(object, "deviance")^2)
 }
 
+#' @rdname lmls-methods
 #' @export
 
 fitted.lmls <- function(object, predictor = c("location", "scale"), ...) {
@@ -64,6 +95,7 @@ plot.lmls <- function(x,
   invisible(x)
 }
 
+#' @rdname lmls-methods
 #' @importFrom stats as.formula coef fitted model.matrix predict update
 #' @export
 
@@ -158,6 +190,7 @@ qqnorm.lmls <- function(y,
   invisible(y)
 }
 
+#' @rdname lmls-methods
 #' @importFrom stats fitted
 #' @export
 
@@ -205,6 +238,24 @@ simulate.lmls <- function(object, nsim = 1, seed = NULL, ...) {
   out
 }
 
+#' Summary for LMLS
+#'
+#' Prints a summary for location-scale regression models from the [lmls()]
+#' function.
+#'
+#' @param object A location-scale regression model from the [lmls()] function.
+#' @param type Either `"ml"` or `"boot"` or `"mcmc"`:
+#'             \itemize{
+#'               \item If `"ml"`, the maximum likelihood estimates and the
+#'                     asymptotic standard errors are shown.
+#'               \item If `"boot"`, the bootstrap estimates and confidence
+#'                     intervals are shown.
+#'               \item If `"mcmc"`, the Markov chain Monte Carlo (MCMC)
+#'                     estimates and credible intervals are shown.
+#'             }
+#' @param digits The number of digits to print.
+#' @param ... Passed on to [printCoefmat()].
+#'
 #' @importFrom stats AIC BIC coef df.residual printCoefmat resid
 #' @export
 
@@ -267,6 +318,7 @@ summary.lmls <- function(object,
   invisible(object)
 }
 
+#' @rdname lmls-methods
 #' @export
 
 vcov.lmls <- function(object, predictor = c("location", "scale"), ...) {

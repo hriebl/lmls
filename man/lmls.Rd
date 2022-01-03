@@ -2,7 +2,7 @@
 % Please edit documentation in R/lmls.R
 \name{lmls}
 \alias{lmls}
-\title{Location-scale regression}
+\title{Gaussian location-scale regression}
 \usage{
 lmls(
   location,
@@ -40,4 +40,11 @@ the linear predictor through a log link.
 
 This function sets up the model object and estimates it with maximum
 likelihood.
+}
+\examples{
+library(lmls)
+m <- lmls(y ~ poly(x, 2), ~ x, data = abdom)
+summary(m)
+plot(m)
+qqnorm(m)
 }
