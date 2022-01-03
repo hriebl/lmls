@@ -52,5 +52,5 @@ If \code{"response"}, \eqn{y - \mu} is returned.
 }
 \description{
 A couple of methods for location-scale regression models from the \code{\link[=lmls]{lmls()}}
-function.
+function are provided.
 }

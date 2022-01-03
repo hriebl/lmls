@@ -31,13 +31,13 @@ gestational ages (explanatory variable) ranging between 12 and 42 weeks.
 The data were used to derive reference intervals by Chitty \emph{et al.}
 (1994) and also for comparing different reference centile methods by
 Wright and Royston (1997), who also commented that the distribution of
-Z-scores obtained from the different fitted models 'has somewhat longer
-tails than the normal distribution'.
+z-scores obtained from the different fitted models "has somewhat longer
+tails than the normal distribution".
 }
 \examples{
 data(abdom)
 attach(abdom)
-plot(x,y)
+plot(x, y)
 detach(abdom)
 }
 \references{

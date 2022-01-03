@@ -1,7 +1,7 @@
 #' Methods for LMLS
 #'
 #' A couple of methods for location-scale regression models from the [lmls()]
-#' function.
+#' function are provided.
 #'
 #' @param object A location-scale regression model from the [lmls()] function.
 #' @param predictor The predictor to work on. Either `"location"` or `"scale"`
