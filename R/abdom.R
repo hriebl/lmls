@@ -1,4 +1,4 @@
-#' Abdominal Circumference Data
+#' Abdominal circumference data
 #'
 #' The `abdom` data frame has 610 rows and 2 columns. The data are
 #' measurements of abdominal circumference (response variable) taken from

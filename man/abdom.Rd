@@ -2,7 +2,7 @@
 % Please edit documentation in R/abdom.R
 \name{abdom}
 \alias{abdom}
-\title{Abdominal Circumference Data}
+\title{Abdominal circumference data}
 \format{
 This data frame contains the following columns:
 

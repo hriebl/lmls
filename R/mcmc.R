@@ -129,11 +129,10 @@ dual_averaging <- function(m, num_warmup = 1000, target_accept = 0.8,
 #' Girolami, M. and Calderhead, B. (2011), Riemann manifold Langevin and
 #' Hamiltonian Monte Carlo methods. Journal of the Royal Statistical Society:
 #' Series B (Statistical Methodology), 73: 123-214.
-#' <https://doi.org/10.1111/j.1467-9868.2010.00765.x>
+#' \doi{10.1111/j.1467-9868.2010.00765.x}
 #'
 #' Nesterov, Y. (2009), Primal-dual subgradient methods for convex problems.
-#' Mathematical Programming, 120: 221–259.
-#' <https://doi.org/10.1007/s10107-007-0149-x>
+#' Mathematical Programming, 120: 221–259. \doi{10.1007/s10107-007-0149-x}
 #'
 #' @examples
 #' library(lmls)
