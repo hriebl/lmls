@@ -134,6 +134,12 @@ dual_averaging <- function(m, num_warmup = 1000, target_accept = 0.8,
 #' Nesterov, Y. (2009), Primal-dual subgradient methods for convex problems.
 #' Mathematical Programming, 120: 221–259. \doi{10.1007/s10107-007-0149-x}
 #'
+#' @return
+#'
+#' An `lmls` S3 object, see [lmls()]. The entry `mcmc` with the matrices
+#' of MCMC samples is added to the object as a list with the names `location`
+#' and `scale`.
+#'
 #' @examples
 #' library(lmls)
 #' m <- lmls(y ~ poly(x, 2), ~ x, data = abdom, light = FALSE)

@@ -14,6 +14,11 @@ boot(m, num_samples = 1000, seed = NULL)
 \item{seed}{Either \code{NULL} or an integer that will be used in a call to
 \code{\link[=set.seed]{set.seed()}} before simulating the response vectors.}
 }
+\value{
+An \code{lmls} S3 object, see \code{\link[=lmls]{lmls()}}. The entry \code{boot} with the matrices of
+bootstrap samples is added to the object as a list with the names \code{location}
+and \code{scale}.
+}
 \description{
 A simple parametric bootstrap algorithm for location-scale regression models
 from the \code{\link[=lmls]{lmls()}} function.

@@ -6,7 +6,9 @@ Authors@R: person("Hannes", "Riebl", email = "hriebl@uni-goettingen.de",
 Description: The Gaussian location-scale regression model is a multi-predictor
     model with explanatory variables for the mean (= location) and the standard
     deviation (= scale) of a response variable. This package implements maximum
-    likelihood and Markov chain Monte Carlo (MCMC) inference, a parametric
+    likelihood and Markov chain Monte Carlo (MCMC) inference (using algorithms
+    from Girolami and Calderhead (2011) <doi:10.1111/j.1467-9868.2010.00765.x>
+    and Nesterov (2009) <doi:10.1007/s10107-007-0149-x>), a parametric
     bootstrap algorithm, and diagnostic plots for the model class.
 License: MIT + file LICENSE
 URL: https://hriebl.github.io/lmls/

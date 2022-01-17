@@ -23,6 +23,12 @@
 #'                     If `"response"`, \eqn{y - \mu} is returned.
 #'             }
 #'
+#' @return
+#'
+#' A numeric vector for `residuals()`. For the other methods, a numeric vector
+#' if the argument `predictor` is either `"location"` or `"scale"`, or a list
+#' with the names `location` and `scale` if it is both.
+#'
 #' @name lmls-methods
 
 NULL
@@ -255,6 +261,10 @@ simulate.lmls <- function(object, nsim = 1, seed = NULL, ...) {
 #'             }
 #' @param digits The number of digits to print.
 #' @param ... Passed on to [printCoefmat()].
+#'
+#' @return
+#'
+#' The (unmodified and invisible) `lmls` S3 object, see [lmls()].
 #'
 #' @importFrom stats AIC BIC coef df.residual printCoefmat resid
 #' @export

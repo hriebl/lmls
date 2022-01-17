@@ -50,6 +50,11 @@ are returned.
 If \code{"response"}, \eqn{y - \mu} is returned.
 }}
 }
+\value{
+A numeric vector for \code{residuals()}. For the other methods, a numeric vector
+if the argument \code{predictor} is either \code{"location"} or \code{"scale"}, or a list
+with the names \code{location} and \code{scale} if it is both.
+}
 \description{
 A couple of methods for location-scale regression models from the \code{\link[=lmls]{lmls()}}
 function are provided.

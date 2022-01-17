@@ -32,6 +32,25 @@ algorithm.}
 \item{reltol}{The relative convergence tolerance of the Fisher scoring
 algorithm.}
 }
+\value{
+A fitted linear model for location and scale as an \code{lmls} S3 object.
+The object has at least the following entries:
+\itemize{
+\item \code{y}: the response vector
+\item \code{nobs}: the number of observations
+\item \code{df}: the degrees of freedom
+\item \code{df.residual}: the residual degrees of freedom
+\item \code{coefficients}: the regression coefficients as a list with the names
+\code{location} and \code{scale}
+\item \code{fitted.values}: the fitted values as a list with the names \code{location}
+and \code{scale}
+\item \code{residuals}: the response residuals
+\item \code{coefficients}: the variance-covariance matrices of the regression
+coefficients as a list with the names \code{location} and \code{scale}
+\item \code{iterations}: the number of iterations the Fisher scoring algorithm
+took to converge
+}
+}
 \description{
 The location-scale regression model assumes a normally distributed response
 variable with one linear predictor for the mean (= the location) and one for

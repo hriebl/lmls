@@ -159,6 +159,25 @@ finish <- function(m) {
 #' @param reltol The relative convergence tolerance of the Fisher scoring
 #'               algorithm.
 #'
+#' @return
+#'
+#' A fitted linear model for location and scale as an `lmls` S3 object.
+#' The object has at least the following entries:
+#'
+#' - `y`: the response vector
+#' - `nobs`: the number of observations
+#' - `df`: the degrees of freedom
+#' - `df.residual`: the residual degrees of freedom
+#' - `coefficients`: the regression coefficients as a list with the names
+#'   `location` and `scale`
+#' - `fitted.values`: the fitted values as a list with the names `location`
+#'   and `scale`
+#' - `residuals`: the response residuals
+#' - `coefficients`: the variance-covariance matrices of the regression
+#'   coefficients as a list with the names `location` and `scale`
+#' - `iterations`: the number of iterations the Fisher scoring algorithm
+#'   took to converge
+#'
 #' @examples
 #' library(lmls)
 #' m <- lmls(y ~ poly(x, 2), ~ x, data = abdom)

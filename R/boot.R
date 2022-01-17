@@ -8,6 +8,12 @@
 #' @param seed Either `NULL` or an integer that will be used in a call to
 #'             [set.seed()] before simulating the response vectors.
 #'
+#' @return
+#'
+#' An `lmls` S3 object, see [lmls()]. The entry `boot` with the matrices of
+#' bootstrap samples is added to the object as a list with the names `location`
+#' and `scale`.
+#'
 #' @examples
 #' library(lmls)
 #' m <- lmls(y ~ poly(x, 2), ~ x, data = abdom, light = FALSE)

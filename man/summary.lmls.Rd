@@ -28,6 +28,9 @@ estimates and credible intervals are shown.
 
 \item{...}{Passed on to \code{\link[=printCoefmat]{printCoefmat()}}.}
 }
+\value{
+The (unmodified and invisible) \code{lmls} S3 object, see \code{\link[=lmls]{lmls()}}.
+}
 \description{
 Prints a summary for location-scale regression models from the \code{\link[=lmls]{lmls()}}
 function.

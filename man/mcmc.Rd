@@ -18,6 +18,11 @@ Defaults to 1000.}
 \item{target_accept}{The target acceptance rate for the dual averaging
 algorithm used for the warm-up. Defaults to 0.8.}
 }
+\value{
+An \code{lmls} S3 object, see \code{\link[=lmls]{lmls()}}. The entry \code{mcmc} with the matrices
+of MCMC samples is added to the object as a list with the names \code{location}
+and \code{scale}.
+}
 \description{
 A Markov chain Monte Carlo (MCMC) sampler for location-scale regression
 models from the \code{\link[=lmls]{lmls()}} function. The sampler uses Gibbs updates for the
