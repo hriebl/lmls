@@ -29,15 +29,19 @@ algorithms and model extensions.
 
 ## Installation
 
-You can install the development version of *lmls* from
-[GitHub](https://github.com) with:
+You can install the released version of *lmls* from
+[CRAN](https://cran.r-project.org/package=lmls) with:
+
+``` r
+install.packages("lmls")
+```
+
+Or install the development version from GitHub:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("hriebl/lmls")
 ```
-
-The [CRAN](https://CRAN.R-project.org) release is in preparation.
 
 ## Example
 
