@@ -12,6 +12,7 @@ Description: The Gaussian location-scale regression model is a multi-predictor
     bootstrap algorithm, and diagnostic plots for the model class.
 License: MIT + file LICENSE
 URL: https://hriebl.github.io/lmls/
+BugReports: https://github.com/hriebl/lmls/issues
 Depends: R (>= 3.5.0)
 Imports: generics (>= 0.1.0)
 Suggests:
