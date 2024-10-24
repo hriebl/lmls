@@ -1,5 +1,5 @@
 all_attr_but_dim <- function(object, expected) {
-  ignore_attr <- names(attributes(object))
+  ignore_attr <- as.character(names(attributes(object)))
   ignore_attr <- c(ignore_attr, names(attributes(expected)))
   ignore_attr[ignore_attr != "dim"]
 }
@@ -38,6 +38,8 @@ expect_roughly <- function(object,
                            expected.label = NULL) {
   if (is.null(ignore_attr)) {
     ignore_attr <- all_attr_but_dim(object, expected)
+  } else {
+    ignore_attr <- FALSE
   }
 
   testthat::expect_equal(
