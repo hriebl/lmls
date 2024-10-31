@@ -129,7 +129,7 @@ abdom$resid <- resid(m1)
 
 ggplot(abdom, aes(x, resid)) +
   geom_point(color = "darkgray", size = 1) +
-  geom_hline(yintercept = 0, size = 0.5) +
+  geom_hline(yintercept = 0, linewidth = 0.5) +
   xlab("Age [weeks]") +
   ylab("Residuals")
 ```
@@ -157,9 +157,9 @@ abdom$lower <- abdom$mu - 1.96 * abdom$sigma
 
 ggplot(abdom, aes(x, y)) +
   geom_point(color = "darkgray", size = 1) +
-  geom_line(aes(y = mu), size = 0.7) +
-  geom_line(aes(y = upper), size = 0.3) +
-  geom_line(aes(y = lower), size = 0.3) +
+  geom_line(aes(y = mu), linewidth = 0.7) +
+  geom_line(aes(y = upper), linewidth = 0.3) +
+  geom_line(aes(y = lower), linewidth = 0.3) +
   xlab("Age [weeks]") +
   ylab("Size [mm]")
 ```
@@ -186,9 +186,9 @@ abdom$lower <- abdom$mu - 1.96 * abdom$sigma
 
 ggplot(abdom, aes(x, y)) +
   geom_point(color = "darkgray", size = 1) +
-  geom_line(aes(y = mu), size = 0.7) +
-  geom_line(aes(y = upper), size = 0.3) +
-  geom_line(aes(y = lower), size = 0.3) +
+  geom_line(aes(y = mu), linewidth = 0.7) +
+  geom_line(aes(y = upper), linewidth = 0.3) +
+  geom_line(aes(y = lower), linewidth = 0.3) +
   xlab("Age [weeks]") +
   ylab("Size [mm]")
 ```
