@@ -8,3 +8,5 @@
 ^pkgdown$
 ^docs$
 ^cran-comments\.md$
+^doc$
+^Meta$
