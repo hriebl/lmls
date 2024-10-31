@@ -38,8 +38,6 @@ expect_roughly <- function(object,
                            expected.label = NULL) {
   if (is.null(ignore_attr)) {
     ignore_attr <- all_attr_but_dim(object, expected)
-  } else {
-    ignore_attr <- FALSE
   }
 
   testthat::expect_equal(
