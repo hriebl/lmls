@@ -1,6 +1,8 @@
-# lmls 0.1.0.9000
+# lmls 0.1.1
 
-* TODO.
+* Fix failing tests after waldo update.
+* Update README and vignette.
+* Fix GitHub actions.
 
 # lmls 0.1.0
 
