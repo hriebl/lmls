@@ -6,26 +6,26 @@
 <!-- badges: start -->
 
 [![R CMD
-check](https://github.com/hriebl/lmls/workflows/R-CMD-check/badge.svg)](https://github.com/hriebl/lmls/actions)
+check](https://github.com/hriebl/lmls/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/hriebl/lmls/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/hriebl/lmls/branch/main/graph/badge.svg)](https://app.codecov.io/gh/hriebl/lmls?branch=main)
 <!-- badges: end -->
 
-*lmls* is an R package which deals with linear models for location and
-scale. Those models are multi-predictor regression models with
+*lmls* is an R package for working with linear models for location and
+scale. These models are multi-predictor regression models with
 explanatory variables for the mean (= the location) and the standard
 deviation (= the scale) of a normally distributed response variable.
-They are a special case of generalized additive models for location,
+They are special cases of generalized additive models for location,
 scale and shape (GAMLSS), as described by [Rigby and Stasinopoulos
 (2005)](https://doi.org/10.1111/j.1467-9876.2005.00510.x).
 
 The *lmls* package provides functions for maximum likelihood and Markov
 chain Monte Carlo (MCMC) estimation, a parametric bootstrap algorithm,
-and diagnostic plots. It was written for the “Advanced Statistical
-Programming” course at the University of Göttingen. Feel free to use the
-package and the vignette as an introduction to location-scale
-regression, or as a basis for the implementation of additional inference
-algorithms and model extensions.
+and some diagnostic plots. It was written for the “Advanced Statistical
+Programming” course at Göttingen University. Feel free to use the
+package and vignette as an introduction to location-scale regression, or
+as a basis for the implementation of additional inference algorithms and
+model extensions.
 
 ## Installation
 
@@ -73,9 +73,9 @@ df$lower <- df$mu - 1.96 * df$sigma
 
 ggplot(df, aes(x, y)) +
   geom_point(color = "darkgray", size = 1) +
-  geom_line(aes(y = mu), size = 0.7) +
-  geom_line(aes(y = upper), size = 0.3) +
-  geom_line(aes(y = lower), size = 0.3) +
+  geom_line(aes(y = mu), linewidth = 0.7) +
+  geom_line(aes(y = upper), linewidth = 0.3) +
+  geom_line(aes(y = lower), linewidth = 0.3) +
   xlab("Age [weeks]") +
   ylab("Size [mm]")
 ```
