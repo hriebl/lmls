@@ -1,7 +1,7 @@
 Package: lmls
 Title: Gaussian Location-Scale Regression
 Version: 0.1.0.9000
-Authors@R: person("Hannes", "Riebl", email = "hriebl@uni-goettingen.de",
+Authors@R: person("Hannes", "Riebl", email = "hriebl@posteo.de",
                   role = c("aut", "cre"))
 Description: The Gaussian location-scale regression model is a multi-predictor
     model with explanatory variables for the mean (= location) and the standard
