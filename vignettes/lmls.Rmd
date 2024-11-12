@@ -197,8 +197,6 @@ ggplot(abdom, aes(x, y)) +
 
 The `lmls` package implements two inference algorithms: a frequentist maximum likelihood (ML) algorithm, which it uses by default, and a Bayesian Markov chain Monte Carlo (MCMC) algorithm. The derivatives that are required for these inference algorithms are derived in the Appendix in Section \@ref(sec:appendix).
 
-\pagebreak
-
 To simplify the notation in this and the next section, we first define the response vector $\yvec = [y_1, \dots, y_n]'$, the design matrices $\xmat = [\xvec_1', \dots, \xvec_n']'$ and $\zmat = [\zvec_1', \dots, \zvec_n']'$, and the standard deviation of the $i$-th observation $\sigma_i = \exp(\zvec_i'\gammavec)$. Finally, let $\wmat$ be the weight matrix
 \begin{equation}
 \wmat = \begin{bmatrix}
@@ -332,8 +330,6 @@ where $\betawls$ is the WLS estimator for $\betavec$ using the weight matrix $\w
 $$p(\betavec \mid \cdot\,) \propto \exp(-1/2 \cdot (\betavec - \betawls)' \xmat'\wmat\xmat (\betavec - \betawls)),$$
 which implies the following multivariate normal distribution:
 $$\betavec \mid \cdot\, \sim \N(\betawls, (\xmat'\wmat\xmat)^{-1}).$$
-
-\pagebreak
 
 # Comparison with other R packages
 
